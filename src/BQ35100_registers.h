@@ -1,0 +1,7 @@
+#ifndef BQ35100_REGISTERS_H
+#define BQ35100_REGISTERS_H
+
+#define BQ35100_READ_VOLTAGE_MSB        0x09
+#define BQ35100_READ_VOLTAGE_LSB        0x08
+
+#endif
