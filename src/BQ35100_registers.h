@@ -3,5 +3,8 @@
 
 #define BQ35100_READ_VOLTAGE_MSB        0x09
 #define BQ35100_READ_VOLTAGE_LSB        0x08
+#define BQ35100_READ_BATTERY_STATUS     0x0A
+#define BQ35100_READ_CURRENT_MSB        0x0D
+#define BQ35100_READ_CURRENT_LSB        0x0C
 
 #endif

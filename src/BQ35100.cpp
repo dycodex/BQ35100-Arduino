@@ -44,5 +44,45 @@ uint16_t BQ35100::readVoltage() {
     return result;
 }
 
+battery_status_t BQ35100::readBatteryStatus() {
+    Wire.beginTransmission(this->i2cAddress);
+    Wire.write(BQ35100_READ_BATTERY_STATUS);
+    Wire.endTransmission();
+    battery_status_t status;
 
+    uint8_t result = 0;
+    Wire.requestFrom(this->i2cAddress, 1);
+
+    if (Wire.available() >= 1) {
+        result = Wire.read();
+    }
+
+    if (result == 0) {
+        status.isDischargeDetected = false;
+        status.isAlertActive = false;
+    } else {
+        status.isDischargeDetected = ((result >> 2) & 0x01);
+        status.isAlertActive = ((result >> 0) & 0x01);
+    }
+
+    return status;
+}
+
+int16_t BQ35100::readCurrent() {
+    Wire.beginTransmission(this->i2cAddress);
+    Wire.write(BQ35100_READ_CURRENT_MSB);
+    Wire.write(BQ35100_READ_CURRENT_LSB);
+    Wire.endTransmission();
+
+    int16_t result = 0;
+
+    Wire.requestFrom(this->i2cAddress, 2);
+
+    if (Wire.available() >= 2) {
+        result = Wire.read(); // MSB first
+        result = (result << 8) | Wire.read();
+    }
+
+    return result;
+}
 
